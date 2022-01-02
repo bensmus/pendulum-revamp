@@ -5,6 +5,8 @@
 //     }
 // }
 
+import { Vector } from "./vector";
+
 interface Physics {
     gravityAccel: 1; // pixel per second / second
 };

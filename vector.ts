@@ -6,7 +6,7 @@ const canvasDim = 500;
 document.getElementById("canvas").setAttribute("width", canvasDim.toString());
 document.getElementById("canvas").setAttribute("height", canvasDim.toString());
 
-class Vector {
+export class Vector {
     x: number;
     y: number;
     constructor(x: number, y: number) {

@@ -17,9 +17,7 @@
         ctx.lineWidth = 1;
         let startTime = new Date().getTime();
 
-        function draw() {
-            let elapsed = new Date().getTime() - startTime;
-
+        function draw(elapsed) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             // time dependent code
@@ -40,7 +38,9 @@
             }
         }
 
-        setInterval(draw, 10); // approx 60 hz
+        setInterval(function drawElapsed() {
+            draw(new Date().getTime() - startTime);
+        }, 10); // approx 60 hz
 
         // function foo() {
         //     console.log("foo");

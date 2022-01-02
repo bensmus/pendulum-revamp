@@ -11,10 +11,6 @@
     </body>
     <script src="vector.js"></script>
     <script>
-        // setup drawing
-        var canvas = document.getElementById("canvas");
-        var ctx = canvas.getContext("2d");
-        ctx.lineWidth = 1;
         let startTime = new Date().getTime();
 
         function draw(elapsed) {
@@ -42,9 +38,5 @@
             draw(new Date().getTime() - startTime);
         }, 10); // approx 60 hz
 
-        // function foo() {
-        //     console.log("foo");
-        //     setInterval(foo, 100);
-        // }
     </script>
 </html>

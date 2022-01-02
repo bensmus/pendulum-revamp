@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Vector Test</title>
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+    </body>
+    <script src="vector.js"></script>
+    <script>
+        // setup drawing
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        ctx.lineWidth = 1;
+        let startTime = new Date().getTime();
+
+        function draw() {
+            let elapsed = new Date().getTime() - startTime;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // time dependent code
+            let vector = new Vector(1, 1).rotate((elapsed * 2 * Math.PI) / 20000); // 1 cycle per 20 seconds
+            console.log(elapsed);
+
+            // vector
+            vector.draw();
+
+            // some force components
+            for (
+                let relAngle = 0;
+                relAngle < 2 * Math.PI;
+                relAngle += Math.PI / 12
+            ) {
+                let component = vector.component(relAngle);
+                component.draw();
+            }
+        }
+
+        setInterval(draw, 10); // approx 60 hz
+
+        // function foo() {
+        //     console.log("foo");
+        //     setInterval(foo, 100);
+        // }
+    </script>
+</html>

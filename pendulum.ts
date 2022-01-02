@@ -8,22 +8,29 @@
 import { Vector } from "./vector";
 
 interface Physics {
-    gravityAccel: 1; // pixel per second / second
+    gravityAccel: number; // pixel per second / second
 };
 
+interface State {
+    angle: number;
+    angularVelocity: number;
+    angularAcceleration: number;
+}
+
 class Pendulum {
-    pointFixed: Vector;
-    point: Vector;
+    radiusVector: Vector;
     physics: Physics;
-    constructor(pointFixed: Vector, point: Vector, physics: Physics) {
+    state: State;
+    constructor(radiusVector: Vector, physics: Physics) {
         // Make the points Vectors
-        this.pointFixed = pointFixed;
-        this.point = point;
+        this.radiusVector = radiusVector;
         this.physics = physics;
+        this.state = { angle: radiusVector.angle(), angularVelocity: 0, angularAcceleration: 0 };
     }
-    step() {
-        let gravityVector = new Vector(0, -1).scale(this.physics.gravityAccel);
-        let tensionVector = this.point.sub(this.pointFixed);
+    step(timeDelta: number) {
+        const gravityVector = new Vector(0, -1).scale(this.physics.gravityAccel);
+        const resultantAngle = this.radiusVector.scale(-1).angle() + Math.PI / 2;
+        const resultantVector = gravityVector.component(resultantAngle);
     }
     draw() { }
 }

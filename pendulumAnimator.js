@@ -1,7 +1,7 @@
 let pendulum = new Pendulum(
     { angle: 0, angularVelocity: 0, angularAcceleration: 0 },
     1,
-    { gravityAccel: 1 }
+    { gravityAccel: 1, airResistance: 0.01}
 );
 
 setInterval(function drawstep() {

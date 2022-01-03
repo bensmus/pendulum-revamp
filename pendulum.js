@@ -24,9 +24,9 @@ class Pendulum {
         // angularAcceleration can be positive or negative! (negative means counterclockwise)
         const angularAcceleration =
             (-Math.sign(radiusVector.x) * resultantVector.norm()) /
-            radiusVector.norm();
+            radiusVector.norm() + this.physics.airResistance * this.state.angularVelocity ** 2 * (-Math.sign(this.state.angularVelocity));
         // update state
-        this.state.angle += this.state.angularVelocity * timeDelta;
+        this.state.angle += this.state.angularVelocity * timeDelta; 
         this.state.angularVelocity +=
             this.state.angularAcceleration * timeDelta;
         this.state.angularAcceleration = angularAcceleration;

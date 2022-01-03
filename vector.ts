@@ -1,10 +1,10 @@
 const canvas = <HTMLCanvasElement>document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-ctx.lineWidth = 1;
+ctx!.lineWidth = 1;
 
 const canvasDim = 500;
-document.getElementById("canvas").setAttribute("width", canvasDim.toString());
-document.getElementById("canvas").setAttribute("height", canvasDim.toString());
+document.getElementById("canvas")!.setAttribute("width", canvasDim.toString());
+document.getElementById("canvas")!.setAttribute("height", canvasDim.toString());
 
 export class Vector {
     x: number;
@@ -47,10 +47,10 @@ export class Vector {
             .scale(scale)
             .add(dispVect);
 
-        ctx.beginPath();
-        ctx.moveTo(disp, disp);
-        ctx.lineTo(drawnVector.x, drawnVector.y);
-        ctx.stroke();
+        ctx!.beginPath();
+        ctx!.moveTo(disp, disp);
+        ctx!.lineTo(drawnVector.x, drawnVector.y);
+        ctx!.stroke();
     }
     rotate(relAngle: number) {
         const rotatedAngle = this.angle() + relAngle;

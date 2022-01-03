@@ -5,7 +5,7 @@
 //     }
 // }
 
-import { Vector } from "./vector";
+import { Vector } from "./vector"; 
 
 interface Physics {
     gravityAccel: number; // pixel per second / second
@@ -17,7 +17,7 @@ interface State {
     angularAcceleration: number;
 }
 
-class Pendulum {
+export class Pendulum {
     state: State;
     length: number;
     physics: Physics;

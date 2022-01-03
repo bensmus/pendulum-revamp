@@ -25,7 +25,6 @@ class Pendulum {
         const angularAcceleration =
             (-Math.sign(radiusVector.x) * resultantVector.norm()) /
             radiusVector.norm();
-
         // update state
         this.state.angle += this.state.angularVelocity * timeDelta;
         this.state.angularVelocity +=

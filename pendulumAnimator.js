@@ -7,5 +7,5 @@ let pendulum = new Pendulum(
 setInterval(function drawstep() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     pendulum.draw();
-    pendulum.step(0.01);
+    pendulum.step(0.005); // will decreasing step size reduce errors?
 }, 1); // 10 ms -> approx 60 hz

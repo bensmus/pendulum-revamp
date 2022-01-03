@@ -18,19 +18,30 @@ interface State {
 }
 
 class Pendulum {
-    radiusVector: Vector;
-    physics: Physics;
     state: State;
-    constructor(radiusVector: Vector, physics: Physics) {
+    length: number;
+    physics: Physics;
+    constructor(state: State, length: number, physics: Physics) {
         // Make the points Vectors
-        this.radiusVector = radiusVector;
+        this.state = state;
+        this.length = length;
         this.physics = physics;
-        this.state = { angle: radiusVector.angle(), angularVelocity: 0, angularAcceleration: 0 };
+    }
+    getRadiusVector() {
+        return new Vector(0, 1).rotate(this.state.angle).scale(this.length);
     }
     step(timeDelta: number) {
+        const radiusVector = this.getRadiusVector();
         const gravityVector = new Vector(0, -1).scale(this.physics.gravityAccel);
-        const resultantAngle = this.radiusVector.scale(-1).angle() + Math.PI / 2;
-        const resultantVector = gravityVector.component(resultantAngle);
+        const resultantVector = gravityVector.component(radiusVector.angle());
+        const angularAcceleration = resultantVector.norm() / radiusVector.norm();
+
+        // update state
+        this.state.angle += this.state.angularVelocity * timeDelta;
+        this.state.angularVelocity += this.state.angularAcceleration * timeDelta;
+        this.state.angularAcceleration = angularAcceleration;
     }
-    draw() { }
+    draw() {
+        this.getRadiusVector().draw();
+    }
 }

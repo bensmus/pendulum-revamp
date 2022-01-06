@@ -1,60 +1,39 @@
-// class NaryPendulum {
-//     constructor(pointFixed, points) {
-//         // Assume massless rods, mass only on end
-//         // points includes mass point and pivot points
-//     }
-// }
+let canvas = document.getElementById("canvas");
+let ctx = canvas.getContext("2d");
+ctx.lineWidth = 1;
 
-class Pendulum {
-    constructor(state, length, physics) {
-        // Make the points Vectors
-        this.state = state; // object with angle, angularVelcity, angularAcceleration
-        this.length = length;
-        this.physics = physics;
-    }
-    getRadiusVector() {
-        return new Vector(1, 0).rotate(this.state.angle).scale(this.length);
-    }
-    step(timeDelta) {
-        const radiusVector = this.getRadiusVector();
-        const gravityVector = new Vector(0, -1).scale(
-            this.physics.gravityAccel
-        );
-        const resultantVector = gravityVector.component(radiusVector.angle());
-        // angularAcceleration can be positive or negative! (negative means counterclockwise)
-        const angularAcceleration =
-            (-Math.sign(radiusVector.x) * resultantVector.norm()) /
-            radiusVector.norm() + this.physics.airResistance * this.state.angularVelocity ** 2 * (-Math.sign(this.state.angularVelocity));
-        // update state
-        this.state.angle += this.state.angularVelocity * timeDelta; 
-        this.state.angularVelocity +=
-            this.state.angularAcceleration * timeDelta;
-        this.state.angularAcceleration = angularAcceleration;
-    }
-    draw() {
-        this.getRadiusVector().draw();
-    }
+let canvasDim = 500;
+document.getElementById("canvas").setAttribute("width", canvasDim.toString());
+document.getElementById("canvas").setAttribute("height", canvasDim.toString());
+
+// Pendulum composed of links.
+// e.g: link = { ang: 3, vel: 2, r: 10 };
+
+// drawLink({ang: Math.PI / 6, vel: NaN, r: 2}, {x:100, y:100})
+function drawLink(link, linkOrigin) {
+    // Scale the link radius. Link origin already in px.
+    // Returns endpoint of link (to be used as next link origin).
+    let scale = 100;
+    let drawnR = link.r * scale;
+    let linkEndpoint = {
+        x: linkOrigin.x + drawnR * Math.cos(link.ang),
+        y: linkOrigin.y + drawnR * Math.sin(link.ang),
+    };
+
+    ctx.beginPath();
+    ctx.moveTo(linkOrigin.x, linkOrigin.y);
+    ctx.lineTo(linkEndpoint.x, linkEndpoint.y);
+    ctx.stroke();
+
+    return linkEndpoint;
 }
 
-/* CONSOLE DEBUG
+function singlePendulumUpdate(link, delta) {
+    let angAccel = -Math.cos(link.ang);
+    link.vel += angAccel * delta;
+    link.ang += link.vel * delta;
+}
 
-const pendulum = new Pendulum(
-    { angle: 0, angularVelocity: 0, angularAcceleration: 0 },
-    1,
-    { gravityAccel: 1 }
-);
-
-const radiusVector = pendulum.getRadiusVector();
-radiusVector.draw()
-
-const gravityVector = new Vector(0, -1).scale(
-            pendulum.physics.gravityAccel
-        );
-gravityVector.draw()
-
-const resultantVector = gravityVector.component(radiusVector.angle());
-resultantVector.draw()
-
-ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-*/
+function doublePendulumUpdate(link1, link2, delta) {
+    // Double pendulum with mass at the end.
+}

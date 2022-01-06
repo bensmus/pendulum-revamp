@@ -17,7 +17,7 @@ function drawLink(link, linkOrigin) {
     let drawnR = link.r * scale;
     let linkEndpoint = {
         x: linkOrigin.x + drawnR * Math.cos(link.ang),
-        y: linkOrigin.y + drawnR * Math.sin(link.ang),
+        y: linkOrigin.y - drawnR * Math.sin(link.ang),
     };
 
     ctx.beginPath();

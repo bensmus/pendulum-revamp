@@ -1,4 +1,4 @@
-link = { ang: 3, vel: 1, r: 1 };
+link = { ang: 0, vel: 0, r: 1 };
 linkOrigin = { x: 200, y: 200 };
 setInterval(function drawstep() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);

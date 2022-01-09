@@ -73,7 +73,26 @@ function animateDoublePendulum(linkOrigin, link1, link2) {
 link1 = { ang: 0, vel: 0, r: 1 };
 link2 = { ang: 0, vel: 0, r: 1 };
 linkOrigin = { x: 200, y: 200 };
+
+// Handle edit events
 drawDoublePendulum(linkOrigin, link1, link2);
+let currentEditLink = undefined;
+let currentEditRadius = undefined;
+let currentEditAngle = undefined;
+
+let infoBar = document.getElementById("infoBar");
+let topLeftButton = document.getElementById("topLeftButton");
+let topRightButton = document.getElementById("topRightButton");
+topLeftButton.onclick = function () {
+    if (!currentEditLink) {  // editing A
+        currentEditLink = link1;
+        topLeftButton.textContent = "editRadius";
+        topRightButton.textContent = "editAngle";
+        infoBar.textContent = "editing A";
+    } else {  // editing Angle
+
+    }
+};
 startButton = document.getElementById("startButton");
 startButton.onclick = function () {
     animateDoublePendulum(linkOrigin, link1, link2);

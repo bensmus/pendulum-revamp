@@ -28,20 +28,26 @@ function drawLink(link, linkOrigin) {
     return linkEndpoint;
 }
 
-function doublePendulumUpdate(link1, link2, delta) {
+function updateDoublePendulum(link1, link2, delta) {
     let angAccel2 = -Math.cos(link2.ang);
     let angAccel1_a = -Math.sin(link2.ang) * Math.cos(link1.ang - link2.ang); // endpoint mass acting
     let angAccel1_b = -Math.cos(link1.ang); // it also is affected by gravity (has mass)
-    linkUpdate(link2, angAccel2, delta);
-    linkUpdate(link1, angAccel1_a + angAccel1_b, delta);
+    updateLink(link2, angAccel2, delta);
+    updateLink(link1, angAccel1_a + angAccel1_b, delta);
 }
 
-function linkUpdate(link, angAccel, delta) {
+function updateLink(link, angAccel, delta) {
     link.vel += angAccel * delta;
     link.ang += link.vel * delta;
 }
 
-function doublePendulumAnimate(linkOrigin, link1, link2) {
+function drawDoublePendulum(linkOrigin, link1, link2) {
+    linkPoint = drawLink(link1, linkOrigin);
+    let endPoint = drawLink(link2, linkPoint);
+    return endPoint;
+}
+
+function animateDoublePendulum(linkOrigin, link1, link2) {
     let endPoints = [];
     let framesElapsed = 0;
     setInterval(function drawstep() {
@@ -58,16 +64,19 @@ function doublePendulumAnimate(linkOrigin, link1, link2) {
         }
         ctx.fillStyle = "black";
 
-        // Draw the pendulum
-        let linkPoint = linkOrigin;
-        linkPoint = drawLink(link1, linkPoint);
-        let endPoint = drawLink(link2, linkPoint);
+        let endPoint = drawDoublePendulum(linkOrigin, link1, link2);
         endPoints.push(endPoint);
-        doublePendulumUpdate(link1, link2, 0.01);
+        updateDoublePendulum(link1, link2, 0.01);
     }, 10); // 10 ms -> approx 60 hz
 }
 
 link1 = { ang: 0, vel: 0, r: 1 };
 link2 = { ang: 0, vel: 0, r: 1 };
 linkOrigin = { x: 200, y: 200 };
-doublePendulumAnimate(linkOrigin, link1, link2);
+drawDoublePendulum(linkOrigin, link1, link2);
+startButton = document.getElementById("startButton");
+startButton.onclick = function () {
+    animateDoublePendulum(linkOrigin, link1, link2);
+};
+
+// TODO: implement reset button that resets it to state before start

@@ -6,22 +6,6 @@ let canvasDim = 500;
 document.getElementById("canvas").setAttribute("width", canvasDim.toString());
 document.getElementById("canvas").setAttribute("height", canvasDim.toString());
 
-///////// FROM STACKOVERFLOW ////////
-let canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-function drawPixel(x, y, r, g, b, a) {
-    let index = (x + y * canvas.width) * 4;
-    canvasData.data[index + 0] = r;
-    canvasData.data[index + 1] = g;
-    canvasData.data[index + 2] = b;
-    canvasData.data[index + 3] = a;
-}
-
-function updateCanvas() {
-    ctx.putImageData(canvasData, 0, 0);
-}
-/////////////////////////////////////
-
 // Pendulum composed of links.
 // e.g: link = { ang: 3, vel: 2, r: 10 };
 
@@ -66,21 +50,27 @@ function linkUpdate(link, angAccel, delta) {
 
 function doublePendulumAnimate(linkOrigin, link1, link2) {
     let endPoints = [];
+    let framesElapsed = 0;
     setInterval(function drawstep() {
+        framesElapsed++;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // Draw the past trail
-        endPoints.forEach((point) => {
-            drawPixel(point.x, point.y, 0, 0, 0, 1);
-        });
-        updateCanvas();
+        for (let i = 0; i < endPoints.length; i++) {
+            const point = endPoints[i];
+            ctx.fillStyle = `hsl(244, 50%, ${
+                50 + ((framesElapsed - i) * 50) / 700
+            }%)`;
+            ctx.fillRect(point.x, point.y, 1, 1);
+        }
+        ctx.fillStyle = "black";
 
         // Draw the pendulum
         let linkPoint = linkOrigin;
         linkPoint = drawLink(link1, linkPoint);
         let endPoint = drawLink(link2, linkPoint);
         endPoints.push(endPoint);
-        doublePendulumUpdate(link1, link2, 0.01); // will decreasing step size reduce errors? yes.
+        doublePendulumUpdate(link1, link2, 0.01);
     }, 10); // 10 ms -> approx 60 hz
 }
 

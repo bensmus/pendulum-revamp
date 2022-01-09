@@ -54,10 +54,11 @@ function drawDoublePendulum(linkOrigin, link1, link2) {
     return [endPoint1, endPoint2];
 }
 
+let intervalID;
 function animateDoublePendulum(linkOrigin, link1, link2) {
     let traces = [];
     let framesElapsed = 0;
-    setInterval(function drawstep() {
+    intervalID = setInterval(function drawstep() {
         framesElapsed++;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -84,17 +85,25 @@ linkOrigin = { x: 200, y: 200 };
 let endPoints = drawDoublePendulum(linkOrigin, link1, link2);
 
 editButton = document.getElementById("editButton"); // Bring up A and B and input boxes
-startButton = document.getElementById("startButton"); // Hide edit elements and begin enimation
+playButton = document.getElementById("playButton"); 
+pauseButton = document.getElementById("pauseButton");
 resetButton = document.getElementById("resetButton"); // Reset pendulum to initial state
 
-startButton.onclick = function () {
+playButton.onclick = function () {
     animateDoublePendulum(linkOrigin, link1, link2);
 };
 
-// TODO: implement reset and edit button
 editButton.onclick = function () {
     ctx.font = "20px serif";
     ctx.fillText("A", endPoints[0].x - 7, endPoints[0].y - 7);
     ctx.fillText("B", endPoints[1].x - 7, endPoints[1].y - 7);
     // TODO: sliders for angle and radius
 };
+
+pauseButton.onclick = function () {
+    clearInterval(intervalID);
+};
+
+resetButton.onclick = function () {
+    // TODO: make it reset
+}

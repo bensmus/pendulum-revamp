@@ -28,11 +28,6 @@ function drawLink(link, linkOrigin) {
     return linkEndpoint;
 }
 
-function singlePendulumUpdate(link, delta) {
-    let angAccel = -Math.cos(link.ang);
-    linkUpdate(link, angAccel, delta);
-}
-
 function doublePendulumUpdate(link1, link2, delta) {
     // Double pendulum with mass at the end.
     // The larger numbered link is closer to the mass.

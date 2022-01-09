@@ -29,13 +29,11 @@ function drawLink(link, linkOrigin) {
 }
 
 function doublePendulumUpdate(link1, link2, delta) {
-    // Double pendulum with mass at the end.
-    // The larger numbered link is closer to the mass.
     let angAccel2 = -Math.cos(link2.ang);
-    let accel1 = link2.r * angAccel2 * Math.cos(link1.ang - link2.ang);
-    let angAccel1 = accel1 / link1.r;
+    let angAccel1_a = -Math.sin(link2.ang) * Math.cos(link1.ang - link2.ang); // endpoint mass acting
+    let angAccel1_b = -Math.cos(link1.ang); // it also is affected by gravity (has mass)
     linkUpdate(link2, angAccel2, delta);
-    linkUpdate(link1, angAccel1, delta);
+    linkUpdate(link1, angAccel1_a + angAccel1_b, delta);
 }
 
 function linkUpdate(link, angAccel, delta) {
@@ -70,6 +68,6 @@ function doublePendulumAnimate(linkOrigin, link1, link2) {
 }
 
 link1 = { ang: 0, vel: 0, r: 1 };
-link2 = { ang: 0, vel: 1, r: 1 };
+link2 = { ang: 0, vel: 0, r: 1 };
 linkOrigin = { x: 200, y: 200 };
 doublePendulumAnimate(linkOrigin, link1, link2);

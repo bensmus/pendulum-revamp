@@ -42,21 +42,28 @@ function updateLink(link, angAccel, delta) {
 }
 
 function drawDoublePendulum(linkOrigin, link1, link2) {
-    linkPoint = drawLink(link1, linkOrigin);
-    let endPoint = drawLink(link2, linkPoint);
-    return endPoint;
+    let endPoint1 = drawLink(link1, linkOrigin);
+    let endPoint2 = drawLink(link2, endPoint1);
+    ctx.beginPath();
+    ctx.arc(endPoint1.x, endPoint1.y, 5, 0, Math.PI * 2, 1);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(endPoint2.x, endPoint2.y);
+    ctx.arc(endPoint2.x, endPoint2.y, 5, 0, Math.PI * 2, 1);
+    ctx.fill();
+    return [endPoint1, endPoint2];
 }
 
 function animateDoublePendulum(linkOrigin, link1, link2) {
-    let endPoints = [];
+    let traces = [];
     let framesElapsed = 0;
     setInterval(function drawstep() {
         framesElapsed++;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // Draw the past trail
-        for (let i = 0; i < endPoints.length; i++) {
-            const point = endPoints[i];
+        for (let i = 0; i < traces.length; i++) {
+            const point = traces[i];
             ctx.fillStyle = `hsl(244, 50%, ${
                 50 + ((framesElapsed - i) * 50) / 700
             }%)`;
@@ -64,8 +71,8 @@ function animateDoublePendulum(linkOrigin, link1, link2) {
         }
         ctx.fillStyle = "black";
 
-        let endPoint = drawDoublePendulum(linkOrigin, link1, link2);
-        endPoints.push(endPoint);
+        let trace = drawDoublePendulum(linkOrigin, link1, link2)[1]; // taking second endpoint
+        traces.push(trace);
         updateDoublePendulum(link1, link2, 0.01);
     }, 10); // 10 ms -> approx 60 hz
 }
@@ -74,28 +81,20 @@ link1 = { ang: 0, vel: 0, r: 1 };
 link2 = { ang: 0, vel: 0, r: 1 };
 linkOrigin = { x: 200, y: 200 };
 
-// Handle edit events
-drawDoublePendulum(linkOrigin, link1, link2);
-let currentEditLink = undefined;
-let currentEditRadius = undefined;
-let currentEditAngle = undefined;
+let endPoints = drawDoublePendulum(linkOrigin, link1, link2);
 
-let infoBar = document.getElementById("infoBar");
-let topLeftButton = document.getElementById("topLeftButton");
-let topRightButton = document.getElementById("topRightButton");
-topLeftButton.onclick = function () {
-    if (!currentEditLink) {  // editing A
-        currentEditLink = link1;
-        topLeftButton.textContent = "editRadius";
-        topRightButton.textContent = "editAngle";
-        infoBar.textContent = "editing A";
-    } else {  // editing Angle
+editButton = document.getElementById("editButton"); // Bring up A and B and input boxes
+startButton = document.getElementById("startButton"); // Hide edit elements and begin enimation
+resetButton = document.getElementById("resetButton"); // Reset pendulum to initial state
 
-    }
-};
-startButton = document.getElementById("startButton");
 startButton.onclick = function () {
     animateDoublePendulum(linkOrigin, link1, link2);
 };
 
-// TODO: implement reset button that resets it to state before start
+// TODO: implement reset and edit button
+editButton.onclick = function () {
+    ctx.font = "20px serif";
+    ctx.fillText("A", endPoints[0].x - 7, endPoints[0].y - 7);
+    ctx.fillText("B", endPoints[1].x - 7, endPoints[1].y - 7);
+    // TODO: sliders for angle and radius
+};

@@ -107,3 +107,4 @@ pauseButton.onclick = function () {
 resetButton.onclick = function () {
     // TODO: make it reset
 }
+

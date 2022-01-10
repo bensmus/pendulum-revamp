@@ -6,12 +6,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Pendulum Simulator</title>
     </head>
+    <style>
+        body {
+            padding-left: 10px;
+            font-family: sans-serif;
+        }
+        #tooltip {
+            padding-top: 5px;
+            font-size: small;
+        }
+    </style>
     <body>
         <canvas id="canvas"></canvas>
-        <button id="editButton">edit</button>
-        <button id="playButton">play</button>
-        <button id="pauseButton">pause</button>
-        <button id="resetButton">reset</button>
+        <div>
+            <button id="editButton">edit</button>
+            <button id="playButton">play</button>
+            <button id="pauseButton">pause</button>
+            <button id="resetButton">reset</button>
+        </div>
+        <div id="tooltip"></div>
     </body>
     <script src="pendulum.js"></script>
+    <script src="tooltips.js"></script>
 </html>

@@ -11,9 +11,18 @@
             padding-left: 10px;
             font-family: sans-serif;
         }
-        #tooltip {
+        div {
             padding-top: 5px;
             font-size: small;
+        }
+        #editDiv {
+            display: none;
+            flex-direction: column;
+        }
+        property {
+            width: 30%;
+            display: flex;
+            justify-content: space-between;
         }
     </style>
     <body>
@@ -25,6 +34,24 @@
             <button id="resetButton">reset</button>
         </div>
         <div id="tooltip"></div>
+        <div id="editDiv">
+            <property>
+                <label for="radiusAInput">radius A</label
+                ><input id="radiusAInput" type="text" />
+            </property>
+            <property>
+                <label for="angleAInput">angle A</label
+                ><input id="angleAInput" type="text" />
+            </property>
+            <property>
+                <label for="radiusBInput">radius B</label
+                ><input id="radiusBInput" type="text" />
+            </property>
+            <property>
+                <label for="angleBInput">angle B</label
+                ><input id="angleBInput" type="text" />
+            </property>
+        </div>
     </body>
     <script src="pendulum.js"></script>
     <script src="tooltips.js"></script>

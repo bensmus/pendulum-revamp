@@ -18,14 +18,14 @@ resetButton.onmouseover = function () {
 };
 
 editButton.onmouseleave = function () {
-    tooltip.innerText = "";
+    tooltip.innerText = "\n";
 };
 playButton.onmouseleave = function () {
-    tooltip.innerText = "";
+    tooltip.innerText = "\n";
 };
 pauseButton.onmouseleave = function () {
-    tooltip.innerText = "";
+    tooltip.innerText = "\n";
 };
 resetButton.onmouseleave = function () {
-    tooltip.innerText = "";
+    tooltip.innerText = "\n";
 };

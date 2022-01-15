@@ -19,10 +19,16 @@
             display: none;
             flex-direction: column;
         }
+        #tooltip {
+            font-style: italic;
+        }
         property {
-            width: 30%;
-            display: flex;
-            justify-content: space-between;
+            width: 25%;
+            min-width: fit-content;
+        }
+        property input {
+            float: right;
+            margin-left: 5px;
         }
     </style>
     <body>
@@ -37,19 +43,19 @@
         <div id="editDiv">
             <property>
                 <label for="radiusAInput">radius A</label
-                ><input id="radiusAInput" type="text" />
+                ><input id="radiusAInput" type="number" />
             </property>
             <property>
                 <label for="angleAInput">angle A</label
-                ><input id="angleAInput" type="text" />
+                ><input id="angleAInput" type="number" />
             </property>
             <property>
                 <label for="radiusBInput">radius B</label
-                ><input id="radiusBInput" type="text" />
+                ><input id="radiusBInput" type="number" />
             </property>
             <property>
                 <label for="angleBInput">angle B</label
-                ><input id="angleBInput" type="text" />
+                ><input id="angleBInput" type="number" />
             </property>
         </div>
     </body>

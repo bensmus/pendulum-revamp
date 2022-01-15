@@ -78,9 +78,17 @@ function animateDoublePendulum(linkOrigin, link1, link2) {
     }, 10); // 10 ms -> approx 60 hz
 }
 
-link1 = { ang: 0, vel: 0, r: 1 };
-link2 = { ang: 0, vel: 0, r: 1 };
-linkOrigin = { x: 200, y: 200 };
+let link1 = { ang: 0, vel: 0, r: 1 };
+let link2 = { ang: 0, vel: 0, r: 1 };
+let linkOrigin = { x: 200, y: 200 };
+function copy(obj) {
+    return JSON.parse(JSON.stringify(obj));
+}
+let snapshot = {
+    link1: copy(link1),
+    link2: copy(link2),
+    linkOrigin: linkOrigin,
+};
 
 let endPoints = drawDoublePendulum(linkOrigin, link1, link2);
 
@@ -100,7 +108,9 @@ editButton.onclick = function () {
     ctx.fillText("A", endPoints[0].x - 7, endPoints[0].y - 7);
     ctx.fillText("B", endPoints[1].x - 7, endPoints[1].y - 7);
     editDiv.style.display = "flex";
-    // TODO: sliders for angle and radius
+    // TODO: turn value inputs into sliders because there are strict
+    // and unintuitive bounds on lengths and angles
+    // also for the angles, you can use a dial widget!
 };
 
 pauseButton.onclick = function () {
@@ -110,3 +120,12 @@ pauseButton.onclick = function () {
 resetButton.onclick = function () {
     // TODO: make it reset
 };
+
+let buttons = document.getElementsByTagName("button");
+for (const button of buttons) {
+    if (button != editButton) {
+        button.addEventListener("click", function () {
+            editDiv.style.display = "none";
+        });
+    }
+}

@@ -2,11 +2,11 @@ let tooltip = document.getElementById("tooltip");
 
 editButton.onmouseover = function () {
     tooltip.innerText =
-        "edit pendulum starting state";
+        "edit pendulum state";
 };
 playButton.onmouseover = function () {
     tooltip.innerText =
-        "play the simulation based on current state";
+        "play the pendulum simulation";
 };
 pauseButton.onmouseover = function () {
     tooltip.innerText =
@@ -14,7 +14,7 @@ pauseButton.onmouseover = function () {
 };
 resetButton.onmouseover = function () {
     tooltip.innerText =
-        "reset the pendulum to its starting state";
+        "reset the pendulum to last edited state";
 };
 
 editButton.onmouseleave = function () {

@@ -121,6 +121,7 @@ resetButton.onclick = function () {
     // TODO: make it reset
 };
 
+// ! Extremely bad
 let buttons = document.getElementsByTagName("button");
 for (const button of buttons) {
     if (button != editButton) {
